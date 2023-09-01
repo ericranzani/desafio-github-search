@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.igorbag.githubsearch.R
 import br.com.igorbag.githubsearch.data.GitHubService
 import br.com.igorbag.githubsearch.domain.Repository
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     //metodo responsavel por configurar os listeners click da tela
     private fun setupListeners() {
         //@TODO 2 - colocar a acao de click do botao confirmar
+        btnConfirmar.setOnClickListener{
+            saveUserLocal()
+        }
     }
 
 
@@ -58,6 +63,11 @@ class MainActivity : AppCompatActivity() {
            URL_BASE da API do  GitHub= https://api.github.com/
            lembre-se de utilizar o GsonConverterFactory mostrado no curso
         */
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        githubApi = retrofit.create(GitHubService::class.java)
     }
 
     //Metodo responsavel por buscar todos os repositorios do usuario fornecido
