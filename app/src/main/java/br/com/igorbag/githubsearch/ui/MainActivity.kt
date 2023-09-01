@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         showUserName()
         setupRetrofit()
         getAllReposByUserName()
+        setupListeners()
     }
 
     // Metodo responsavel por realizar o setup da view e recuperar os Ids do layout
