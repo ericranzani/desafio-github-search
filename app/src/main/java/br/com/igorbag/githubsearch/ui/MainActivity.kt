@@ -1,10 +1,12 @@
 package br.com.igorbag.githubsearch.ui
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.igorbag.githubsearch.R
@@ -50,10 +52,27 @@ class MainActivity : AppCompatActivity() {
     // salvar o usuario preenchido no EditText utilizando uma SharedPreferences
     private fun saveUserLocal() {
         //@TODO 3 - Persistir o usuario preenchido na editText com a SharedPref no listener do botao salvar
+        val usuario = nomeUsuario.text.toString()
+
+        // Obtenha uma instância do SharedPreferences
+        val sharedPreferences = getSharedPreferences("NameUser", Context.MODE_PRIVATE)
+
+        // Use SharedPreferences.Editor para salvar o valor
+        val editor = sharedPreferences.edit()
+        editor.putString("usuario", usuario)
+        editor.apply()
+
+        Toast.makeText(this, "Usuário $usuario salvo localmente.", Toast.LENGTH_SHORT).show()
     }
 
     private fun showUserName() {
         //@TODO 4- depois de persistir o usuario exibir sempre as informacoes no EditText  se a sharedpref possuir algum valor, exibir no proprio editText o valor salvo
+        val sharedPreferences = getSharedPreferences("NameUser", Context.MODE_PRIVATE)
+        val usuarioSalvo = sharedPreferences.getString("usuario", "")
+
+        // Exibir o usuário salvo no EditText
+        nomeUsuario.setText(usuarioSalvo)
+
     }
 
     //Metodo responsavel por fazer a configuracao base do Retrofit
